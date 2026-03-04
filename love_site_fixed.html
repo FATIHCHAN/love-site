@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Для тебя ❤️</title>
+    <style>
+      :root {
+        --bg1: #090612;
+        --bg2: #140b25;
+        --card: #ffffff0d;
+        --stroke: #ffffff1a;
+        --text: #f6f2ff;
+        --muted: #c9bddf;
+        --accent: #ff4d8d;
+        --accent2: #b56bff;
+        --good: #6dffb4;
+        --shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+        --radius: 22px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          "Noto Sans",
+          "Helvetica Neue",
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            1200px 700px at 15% 10%,
+            rgba(255, 77, 141, 0.22),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 600px at 85% 20%,
+            rgba(181, 107, 255, 0.18),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 600px at 50% 95%,
+            rgba(109, 255, 180, 0.1),
+            transparent 55%
+          ),
+          linear-gradient(160deg, var(--bg1), var(--bg2));
+        overflow-x: hidden;
+      }
+
+      /* floating hearts */
+      .float-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .fheart {
+        position: absolute;
+        font-size: 22px;
+        opacity: 0.18;
+        animation: drift linear infinite;
+        transform: translateY(110vh);
+        text-shadow: 0 10px 40px rgba(255, 77, 141, 0.25);
+      }
+      @keyframes drift {
+        from {
+          transform: translateY(110vh) translateX(0) rotate(0deg);
+        }
+        to {
+          transform: translateY(-20vh) translateX(40px) rotate(18deg);
+        }
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 26px 16px 44px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
+      }
+      .logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background:
+          radial-gradient(
+            circle at 30% 30%,
+            rgba(255, 77, 141, 0.95),
+            rgba(255, 77, 141, 0.25) 55%,
+            transparent 60%
+          ),
+          radial-gradient(
+            circle at 70% 70%,
+            rgba(181, 107, 255, 0.8),
+            rgba(181, 107, 255, 0.2) 55%,
+            transparent 62%
+          ),
+          linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.02)
+          );
+        border: 1px solid var(--stroke);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        display: grid;
+        place-items: center;
+      }
+      .logo span {
+        font-size: 18px;
+        opacity: 0.95;
+      }
+      .brand-title {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.05;
+      }
+      .brand-title b {
+        font-size: 14px;
+        letter-spacing: 0.2px;
+      }
+      .brand-title small {
+        color: var(--muted);
+        opacity: 0.92;
+      }
+
+      nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .pill {
+        border: 1px solid var(--stroke);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.03)
+        );
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition:
+          0.2s transform,
+          0.2s opacity,
+          0.2s background;
+        font-weight: 600;
+        font-size: 13px;
+        opacity: 0.92;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
+      .pill:hover {
+        transform: translateY(-1px);
+        opacity: 1;
+      }
+      .pill.active {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 77, 141, 0.22),
+          rgba(181, 107, 255, 0.15)
+        );
+        border-color: rgba(255, 77, 141, 0.35);
+        opacity: 1;
+      }
+
+      .card {
+        border: 1px solid var(--stroke);
+        background: linear-gradient(
+          180deg,
+          var(--card),
+          rgba(255, 255, 255, 0.03)
+        );
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .hero {
+        padding: 22px 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background:
+          radial-gradient(
+            550px 220px at 10% 0%,
+            rgba(255, 77, 141, 0.18),
+            transparent 65%
+          ),
+          radial-gradient(
+            520px 240px at 92% 20%,
+            rgba(181, 107, 255, 0.16),
+            transparent 62%
+          ),
+          radial-gradient(
+            520px 260px at 52% 110%,
+            rgba(109, 255, 180, 0.1),
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .hero > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 30px;
+        letter-spacing: 0.2px;
+      }
+      .sub {
+        color: var(--muted);
+        margin: 0 0 14px;
+        line-height: 1.5;
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 14px;
+      }
+      .btn {
+        border: 1px solid rgba(255, 77, 141, 0.35);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 77, 141, 0.22),
+          rgba(255, 77, 141, 0.08)
+        );
+        color: var(--text);
+        padding: 11px 14px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        transition:
+          0.2s transform,
+          0.2s filter;
+        box-shadow: 0 14px 40px rgba(255, 77, 141, 0.12);
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+      .btn.secondary {
+        border-color: rgba(181, 107, 255, 0.35);
+        background: linear-gradient(
+          180deg,
+          rgba(181, 107, 255, 0.18),
+          rgba(181, 107, 255, 0.06)
+        );
+        box-shadow: 0 14px 40px rgba(181, 107, 255, 0.1);
+      }
+      .btn.ghost {
+        border-color: var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: none;
+        font-weight: 700;
+      }
+      .badge {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        padding: 9px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .badge b {
+        color: var(--text);
+      }
+
+      .view {
+        display: none;
+      }
+      .view.active {
+        display: block;
+      }
+
+      /* progress */
+      .progress {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      .bar {
+        flex: 1;
+        min-width: 220px;
+        height: 10px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+      .bar > i {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 77, 141, 0.85),
+          rgba(181, 107, 255, 0.75)
+        );
+        border-radius: 999px;
+        transition: width 0.25s ease;
+      }
+      .progress .txt {
+        color: var(--muted);
+        font-weight: 800;
+        font-size: 12px;
+      }
+
+      /* Reasons hearts */
+      .panel-title {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .panel-title h2 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0.2px;
+      }
+      .panel-title small {
+        color: var(--muted);
+      }
+
+      .hearts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 10px;
+      }
+      @media (max-width: 700px) {
+        .hearts-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .heart-card {
+        border: 1px solid var(--stroke);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border-radius: 18px;
+        padding: 14px 14px 12px;
+        cursor: pointer;
+        transition:
+          0.18s transform,
+          0.18s background,
+          0.18s border-color;
+        position: relative;
+        overflow: hidden;
+        min-height: 110px;
+      }
+      .heart-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 77, 141, 0.35);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 77, 141, 0.1),
+          rgba(255, 255, 255, 0.03)
+        );
+      }
+      .heart-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .heart-icon {
+        font-size: 24px;
+        filter: drop-shadow(0 10px 25px rgba(255, 77, 141, 0.18));
+      }
+      .lock {
+        font-size: 12px;
+        color: var(--muted);
+        border: 1px solid var(--stroke);
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.14);
+        user-select: none;
+      }
+      .heart-card.revealed .lock {
+        color: rgba(109, 255, 180, 0.9);
+        border-color: rgba(109, 255, 180, 0.25);
+      }
+      .heart-title {
+        margin: 0;
+        font-weight: 900;
+        letter-spacing: 0.2px;
+        font-size: 14px;
+      }
+      .heart-desc {
+        margin: 6px 0 0;
+        color: var(--muted);
+        line-height: 1.35;
+        font-size: 13px;
+        min-height: 42px;
+      }
+      .heart-card:not(.revealed) .heart-title,
+      .heart-card:not(.revealed) .heart-desc {
+        filter: blur(6px);
+        opacity: 0.35;
+        user-select: none;
+      }
+
+      /* Memory game */
+      .game-top {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .stats {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .chip {
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .chip b {
+        color: var(--text);
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 10px;
+      }
+      @media (max-width: 560px) {
+        .board {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .tile {
+        border: 1px solid var(--stroke);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border-radius: 18px;
+        height: 92px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition:
+          0.18s transform,
+          0.18s border-color,
+          0.18s filter;
+        user-select: none;
+      }
+      .tile:hover {
+        transform: translateY(-2px);
+        border-color: rgba(181, 107, 255, 0.35);
+      }
+      .tile .face {
+        font-size: 30px;
+        opacity: 0;
+        transform: scale(0.85);
+        transition: 0.14s ease;
+        filter: drop-shadow(0 12px 30px rgba(181, 107, 255, 0.18));
+      }
+      .tile.revealed .face,
+      .tile.matched .face {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .tile .back {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.45);
+        letter-spacing: 0.3px;
+        background:
+          radial-gradient(
+            220px 140px at 25% 20%,
+            rgba(255, 77, 141, 0.1),
+            transparent 60%
+          ),
+          radial-gradient(
+            220px 140px at 75% 80%,
+            rgba(181, 107, 255, 0.1),
+            transparent 60%
+          ),
+          rgba(255, 255, 255, 0.02);
+        transition: 0.14s ease;
+      }
+      .tile.revealed .back,
+      .tile.matched .back {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+
+      .tile.matched {
+        border-color: rgba(109, 255, 180, 0.3);
+        filter: brightness(1.05);
+        cursor: default;
+      }
+
+      /* Gallery */
+      .gallery-top {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .mem-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      @media (max-width: 900px) {
+        .mem-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 520px) {
+        .mem-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .photo {
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      }
+      .photo .img {
+        height: 180px;
+        background:
+          radial-gradient(
+            240px 140px at 30% 30%,
+            rgba(255, 77, 141, 0.12),
+            transparent 70%
+          ),
+          radial-gradient(
+            240px 140px at 70% 70%,
+            rgba(181, 107, 255, 0.12),
+            transparent 70%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.01)
+          );
+        display: grid;
+        place-items: center;
+        color: rgba(255, 255, 255, 0.35);
+        font-weight: 900;
+        letter-spacing: 0.3px;
+      }
+      .photo img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        display: block;
+      }
+      .photo .cap {
+        padding: 12px 12px 14px;
+      }
+      .photo .cap b {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+        letter-spacing: 0.2px;
+      }
+      .photo .cap small {
+        color: var(--muted);
+        line-height: 1.35;
+        display: block;
+      }
+
+      footer {
+        margin-top: 18px;
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 12px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="float-layer" id="floatLayer" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <header>
+        <div class="brand">
+          <div class="logo"><span>❤</span></div>
+          <div class="brand-title">
+            <b id="siteTitle">Для тебя, любимая бусинка Анечка</b>
+            <small id="siteSubtitle"
+              >От Валеры. С любовью. И с просьбой о прощении.</small
+            >
+          </div>
+        </div>
+
+        <nav id="nav">
+          <button class="pill active" data-view="start">Старт</button>
+          <button class="pill" data-view="reasons">Причины моей любви</button>
+          <button class="pill" data-view="game">Найди пары</button>
+          <button class="pill" data-view="memories">Наши воспоминания</button>
+        </nav>
+      </header>
+
+      <main class="card hero">
+        <!-- START -->
+        <section class="view active" id="view-start">
+          <h1>
+            Анечка, я хочу попросить у тебя прощения за все, я хочу чтобы наш
+            малеьнкий мир дальше развивался без трещин ❤️
+          </h1>
+          <p class="sub">
+            Я сделал этот маленький сайт не “для красоты”, а чтобы сказать
+            главное:
+            <br /><b>я люблю тебя</b>, мне очень важно
+            <b>вернуть всё обратно и быть для тебя самым любимым</b> и больше
+            <b>не ссориться, не срываться, не обижатся</b>. <br />Давай ты
+            пройдешь мини-игру — и мы стобой дойдём до воспоминаний.
+          </p>
+
+          <div class="cta-row">
+            <button class="btn" id="goReasons">Начать →</button>
+            <span class="badge">Прогресс: <b id="overallProgress">0%</b></span>
+          </div>
+
+          <div class="progress" style="margin-top: 16px">
+            <div class="bar"><i id="overallBar"></i></div>
+            <div class="txt" id="overallHint">
+              Открой сердечки и собери пары — финал ждёт.
+            </div>
+          </div>
+
+          <footer>Сделано с ❤️ Валерой</footer>
+        </section>
+
+        <!-- REASONS -->
+        <section class="view" id="view-reasons">
+          <div class="panel-title">
+            <h2>Причины моей безграничной любви</h2>
+            <small>Нажми на каждое сердечко</small>
+          </div>
+
+          <div class="progress">
+            <div class="bar"><i id="reasonsBar"></i></div>
+            <div class="txt">
+              <span id="reasonsCount">0</span>/<span id="reasonsTotal">0</span>
+              открыто
+            </div>
+          </div>
+
+          <div class="hearts-grid" id="heartsGrid"></div>
+
+          <div class="cta-row" style="margin-top: 14px">
+            <button class="btn ghost" id="resetReasons">
+              Скрыть всё заново
+            </button>
+            <button class="btn" id="goGame">Дальше: Найди пары →</button>
+          </div>
+        </section>
+
+        <!-- GAME -->
+        <section class="view" id="view-game">
+          <div class="panel-title">
+            <h2>Игра: найди пары</h2>
+            <small>Собери одинаковые предметы</small>
+          </div>
+
+          <div class="game-top">
+            <div class="stats">
+              <span class="chip">Ходы: <b id="moves">0</b></span>
+              <span class="chip"
+                >Пары: <b id="pairs">0</b>/<b id="pairsTotal">0</b></span
+              >
+              <span class="chip">Время: <b id="time">0:00</b></span>
+            </div>
+            <div class="cta-row" style="margin: 0">
+              <button class="btn ghost" id="newGame">Новая игра</button>
+              <button class="btn" id="goMemories" disabled>
+                Дальше: Воспоминания →
+              </button>
+            </div>
+          </div>
+
+          <div class="board" id="board"></div>
+
+          <p class="sub" style="margin-top: 12px">
+            Я хочу, чтобы мы снова были “мы”. Спокойно, бережно, без лишних слов
+            — мне трудно / но я справлюсь.
+          </p>
+        </section>
+
+        <!-- MEMORIES -->
+        <section class="view" id="view-memories">
+          <div class="panel-title">
+            <h2>наши прекрасные воспоминания</h2>
+          </div>
+
+          <div class="gallery-top">
+            <div class="badge">
+              Финал:
+              <b id="finalText"
+                >я люблю тебя, Анечка. <br />
+                я хочу быть с тобой, мне очень одиноко / грустно / я потерял
+                смысл жизни уже совсем. <br />
+                я надеюсь мы когда нибудь поговорим, угодим друг другу и все
+                будет хорошо. <br />
+                но последнее время я вижу все больше расхождений и у меня
+                истекает сердце кровью / почему мы не можем быть идентичными...
+                <br />
+                я не хочу чтобы время шло и все менялось...
+              </b>
+              ❤️
+            </div>
+            <button class="btn secondary" id="confettiBtn">
+              Сделать красиво ✨
+            </button>
+          </div>
+
+          <div class="mem-grid" id="memGrid"></div>
+
+          <div class="cta-row" style="margin-top: 14px">
+            <button class="btn ghost" id="backToStart">В начало</button>
+          </div>
+
+          <footer>
+            Если ты захочешь — давай попробуем начать заново. я постараюсь
+            сделать все для нас.
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // define global variables for game progress to avoid TDZ issues
+        let matchedPairs = 0;
+        let totalPairs = 0;
+
+        // ======= Floating hearts background =======
+        const floatLayer = document.getElementById("floatLayer");
+        const heartChars = ["❤", "💗", "💖", "💘", "💞", "💜"];
+        for (let i = 0; i < 22; i++) {
+          const s = document.createElement("div");
+          s.className = "fheart";
+          s.textContent =
+            heartChars[Math.floor(Math.random() * heartChars.length)];
+          s.style.left = Math.random() * 100 + "vw";
+          s.style.fontSize = 16 + Math.random() * 22 + "px";
+          const dur = 10 + Math.random() * 16;
+          s.style.animationDuration = dur + "s";
+          s.style.animationDelay = Math.random() * -dur + "s";
+          s.style.opacity = (0.1 + Math.random() * 0.18).toFixed(2);
+          floatLayer.appendChild(s);
+        }
+
+        // ======= Navigation / views =======
+        const nav = document.getElementById("nav");
+        const pills = [...nav.querySelectorAll(".pill")];
+        const views = {
+          start: document.getElementById("view-start"),
+          reasons: document.getElementById("view-reasons"),
+          game: document.getElementById("view-game"),
+          memories: document.getElementById("view-memories"),
+        };
+
+        function setView(key) {
+          Object.values(views).forEach((v) => v.classList.remove("active"));
+          views[key].classList.add("active");
+          pills.forEach((p) =>
+            p.classList.toggle("active", p.dataset.view === key),
+          );
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        nav.addEventListener("click", (e) => {
+          const btn = e.target.closest(".pill");
+          if (!btn) return;
+          setView(btn.dataset.view);
+        });
+
+        document.getElementById("goReasons").onclick = () => setView("reasons");
+        document.getElementById("goGame").onclick = () => setView("game");
+        document.getElementById("backToStart").onclick = () => setView("start");
+
+        // ======= Reasons hearts =======
+        const heartsGrid = document.getElementById("heartsGrid");
+        const reasonsBar = document.getElementById("reasonsBar");
+        const reasonsCountEl = document.getElementById("reasonsCount");
+        const reasonsTotalEl = document.getElementById("reasonsTotal");
+
+        const overallBar = document.getElementById("overallBar");
+        const overallProgressEl = document.getElementById("overallProgress");
+        const overallHint = document.getElementById("overallHint");
+
+        const reasons = [
+          {
+            title: "Твоя безграничная доброта",
+            desc: "Ты умеешь согревать меня. Я это ценю больше, чем говорил.",
+          },
+          {
+            title: "Твоя нежность",
+            desc: "Ты очень нежный человек. И мне жаль, если я когда-то не был таким же бережным. Я ценю эту твою сторону и не хочу её терять.",
+          },
+          {
+            title: "Твой смех",
+            desc: "Он делает даже тяжёлые дни легче. Я скучаю по этому и мне больно каждый день.",
+          },
+          {
+            title: "Твоя искренность",
+            desc: "С тобой всё по-настоящему. Я хочу быть достоин этого.",
+          },
+          {
+            title: "Твоя поддержка",
+            desc: "Ты веришь в меня, не смотря на разлуку. Я хочу вернуть это доверие.",
+          },
+          {
+            title: "Твоё сердце",
+            desc: "Оно невероятно тёплое. Я прошу прощения, если ранил тебя.",
+          },
+          {
+            title: "Твоя сила и оптимизм",
+            desc: "В тебе оптимизма хоть занимай, ты умеешь держаться и идти дальше. Я хочу идти рядом, а не спорить.",
+          },
+          {
+            title: "Наша близость",
+            desc: "Мне важны мы. Я хочу, чтобы мы снова были командой, чтобы у нас было лучшее проведенное время вместе / не смотря не на что.",
+          },
+          {
+            title: "Ты — мой выбор",
+            desc: "Я люблю тебя. И хочу вернуть всё обратно, без ссор и обид. Ты — мой выбор, и я хочу, чтобы это было навсегда.",
+          },
+        ];
+
+        let revealed = new Set();
+
+        function escapeHtml(str) {
+          return String(str).replace(
+            /[&<>"']/g,
+            (s) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;",
+              })[s],
+          );
+        }
+
+        function buildReasons() {
+          heartsGrid.innerHTML = "";
+          revealed = new Set();
+          reasonsTotalEl.textContent = reasons.length;
+
+          reasons.forEach((r, idx) => {
+            const card = document.createElement("div");
+            card.className = "heart-card";
+            card.dataset.idx = idx;
+            card.innerHTML = `
+            <div class="heart-top">
+              <div class="heart-icon">❤</div>
+              <div class="lock">нажми, чтобы открыть</div>
+            </div>
+            <p class="heart-title">${escapeHtml(r.title)}</p>
+            <p class="heart-desc">${escapeHtml(r.desc)}</p>
+          `;
+            card.addEventListener("click", () => {
+              if (card.classList.contains("revealed")) return;
+              card.classList.add("revealed");
+              revealed.add(idx);
+              updateReasonsProgress();
+              card.animate(
+                [
+                  { transform: "translateY(0) scale(1)" },
+                  { transform: "translateY(-3px) scale(1.02)" },
+                  { transform: "translateY(0) scale(1)" },
+                ],
+                { duration: 260, easing: "ease-out" },
+              );
+            });
+            heartsGrid.appendChild(card);
+          });
+
+          updateReasonsProgress();
+        }
+
+        function updateReasonsProgress() {
+          const count = revealed.size;
+          reasonsCountEl.textContent = count;
+          const pctReasons = Math.round((count / reasons.length) * 100);
+          reasonsBar.style.width = pctReasons + "%";
+
+          const pctGame = totalPairs
+            ? Math.round((matchedPairs / totalPairs) * 100)
+            : 0;
+          const overallPct = Math.round(pctReasons * 0.5 + pctGame * 0.5);
+
+          overallBar.style.width = overallPct + "%";
+          overallProgressEl.textContent = overallPct + "%";
+
+          if (overallPct < 50)
+            overallHint.textContent = "Открой сердечки — это важные слова.";
+          else if (overallPct < 100)
+            overallHint.textContent =
+              "Осталось собрать пары и дойти до воспоминаний.";
+          else
+            overallHint.textContent =
+              "Финал открыт. Пожалуйста, прочитай до конца ❤️";
+        }
+
+        document.getElementById("resetReasons").onclick = () => {
+          [...heartsGrid.children].forEach((c) =>
+            c.classList.remove("revealed"),
+          );
+          revealed = new Set();
+          updateReasonsProgress();
+        };
+
+        buildReasons();
+
+        // ======= Memory game =======
+        const board = document.getElementById("board");
+        const movesEl = document.getElementById("moves");
+        const pairsEl = document.getElementById("pairs");
+        const pairsTotalEl = document.getElementById("pairsTotal");
+        const timeEl = document.getElementById("time");
+        const goMemoriesBtn = document.getElementById("goMemories");
+
+        document.getElementById("goMemories").onclick = () =>
+          setView("memories");
+
+        const items = ["💍", "🌹", "🍓", "☕", "🎧", "✨", "🌙", "🧸"]; // 8 pairs
+        let tiles = [];
+        let firstPick = null;
+        let lockBoard = false;
+
+        let moves = 0;
+        let timer = null;
+        let seconds = 0;
+        let started = false;
+
+        function shuffle(arr) {
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+          return arr;
+        }
+
+        function startTimer() {
+          if (timer) return;
+          timer = setInterval(() => {
+            seconds++;
+            const m = Math.floor(seconds / 60);
+            const s = String(seconds % 60).padStart(2, "0");
+            timeEl.textContent = `${m}:${s}`;
+          }, 1000);
+        }
+
+        function stopTimer() {
+          clearInterval(timer);
+          timer = null;
+        }
+
+        function newGame() {
+          stopTimer();
+          seconds = 0;
+          timeEl.textContent = "0:00";
+          started = false;
+
+          moves = 0;
+          matchedPairs = 0;
+          totalPairs = items.length;
+          movesEl.textContent = moves;
+          pairsEl.textContent = matchedPairs;
+          pairsTotalEl.textContent = totalPairs;
+
+          goMemoriesBtn.disabled = true;
+
+          const doubled = [...items, ...items];
+          tiles = shuffle(doubled.map((v, i) => ({ id: i, value: v })));
+
+          firstPick = null;
+          lockBoard = false;
+
+          board.innerHTML = "";
+          tiles.forEach((t, idx) => {
+            const tile = document.createElement("div");
+            tile.className = "tile";
+            tile.dataset.idx = String(idx);
+            tile.innerHTML = `
+            <div class="back">❤</div>
+            <div class="face">${t.value}</div>
+          `;
+            tile.addEventListener("click", () => onTileClick(tile));
+            board.appendChild(tile);
+          });
+
+          updateReasonsProgress();
+        }
+
+        function onTileClick(tileEl) {
+          const idx = Number(tileEl.dataset.idx);
+          if (lockBoard) return;
+          if (tileEl.classList.contains("matched")) return;
+          if (tileEl.classList.contains("revealed")) return;
+
+          if (!started) {
+            started = true;
+            startTimer();
+          }
+
+          tileEl.classList.add("revealed");
+
+          if (firstPick === null) {
+            firstPick = tileEl;
+            return;
+          }
+
+          moves++;
+          movesEl.textContent = moves;
+
+          const aIdx = Number(firstPick.dataset.idx);
+          const bIdx = idx;
+
+          const aVal = tiles[aIdx].value;
+          const bVal = tiles[bIdx].value;
+
+          if (aVal === bVal) {
+            // match
+            firstPick.classList.add("matched");
+            tileEl.classList.add("matched");
+            firstPick.classList.remove("revealed");
+            tileEl.classList.remove("revealed");
+
+            matchedPairs++;
+            pairsEl.textContent = matchedPairs;
+
+            firstPick = null;
+
+            if (matchedPairs === totalPairs) {
+              stopTimer();
+              goMemoriesBtn.disabled = false;
+              burst(tileEl.getBoundingClientRect());
+            }
+            updateReasonsProgress();
+          } else {
+            lockBoard = true;
+            setTimeout(() => {
+              firstPick.classList.remove("revealed");
+              tileEl.classList.remove("revealed");
+              firstPick = null;
+              lockBoard = false;
+            }, 700);
+          }
+        }
+
+        document.getElementById("newGame").onclick = newGame;
+        newGame();
+
+        // ======= Memories (через код) =======
+        const memGrid = document.getElementById("memGrid");
+        const memoryCards = [
+          {
+            title: "Наше знакомтсво",
+            text: "наше знакомство это лучшее что происходило со мной в жизни.",
+            img: "фото/2024-03-01 15-59-46.jpg",
+          },
+          {
+            title: "это миии",
+            text: "мы тут такие милашки, я не могу.",
+            img: "фото/2024-03-30 22-04-26.jpg",
+          },
+          {
+            title: "dj макс fly захазахзах",
+            text: "ты всегда меня поддерживаешь и этот день был не исключением.",
+            img: "фото/2024-06-01 22-42-32 (1).jpg",
+          },
+          {
+            title: "моя бусенка закончила школу ",
+            text: "это твой выпускной, я был рад за тебя / больше тебя..",
+            img: "фото/2025-05-24 14-41-44 (1).jpg",
+          },
+          {
+            title: "parma valley",
+            text: "'это мы на парме, я ее всю испортил и обижал тебя, но она запомниалсь для меня глубоко в сердце'.",
+            img: "фото/2025-07-18 16-33-45.jpg",
+          },
+          {
+            title: "наша годовщина",
+            text: "в тот день я понял что не могу тебя отпустить и что ты только моя, и что это реально мой выбор. мне трудно даже близко представить что ты тусуешься с какими-то другими парнями.",
+            img: "фото/2025-07-28 16-58-48.jpg",
+          },
+        ];
+
+        function renderMemories() {
+          memGrid.innerHTML = "";
+          memoryCards.forEach((m, idx) => {
+            const card = document.createElement("div");
+            card.className = "photo";
+
+            const imgPart = m.img
+              ? `<img src="${m.img}" alt="memory ${idx + 1}">`
+              : `<div class="img">ФОТО</div>`;
+
+            card.innerHTML = `
+            ${imgPart}
+            <div class="cap">
+              <b>${escapeHtml(m.title)}</b>
+              <small>${escapeHtml(m.text)}</small>
+            </div>
+          `;
+            memGrid.appendChild(card);
+          });
+        }
+        renderMemories();
+
+        // ======= Confetti-ish burst =======
+        function burst(rect) {
+          const n = 18;
+          for (let i = 0; i < n; i++) {
+            const p = document.createElement("div");
+            p.style.position = "fixed";
+            p.style.left = rect.left + rect.width / 2 + "px";
+            p.style.top = rect.top + rect.height / 2 + "px";
+            p.style.zIndex = 9999;
+            p.style.pointerEvents = "none";
+            p.style.fontSize = 14 + Math.random() * 14 + "px";
+            p.textContent =
+              heartChars[Math.floor(Math.random() * heartChars.length)];
+            const dx = (Math.random() * 2 - 1) * (120 + Math.random() * 120);
+            const dy = (Math.random() * 2 - 1) * (120 + Math.random() * 120);
+            document.body.appendChild(p);
+
+            p.animate(
+              [
+                { transform: `translate(0,0) scale(1)`, opacity: 0.95 },
+                {
+                  transform: `translate(${dx}px, ${dy}px) scale(1.2)`,
+                  opacity: 0,
+                },
+              ],
+              {
+                duration: 900 + Math.random() * 500,
+                easing: "cubic-bezier(.2,.8,.2,1)",
+              },
+            ).onfinish = () => p.remove();
+          }
+        }
+
+        document.getElementById("confettiBtn").onclick = () => {
+          const rect = document
+            .querySelector(".brand .logo")
+            .getBoundingClientRect();
+          burst(rect);
+        };
+
+        // initial overall progress
+        updateReasonsProgress();
+      });
+    </script>
+  </body>
+</html>
